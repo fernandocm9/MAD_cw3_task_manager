@@ -71,6 +71,7 @@ class _TaskListScreen extends State<TaskListScreen> {
             final task = _taskList[index];
             return ListTile(
               title: Text(task.title),
+              tileColor: task.isCompleted ? Colors.green : Colors.red,
               subtitle: Text(task.description),
               trailing: Checkbox(
                 value: task.isCompleted,
@@ -80,11 +81,11 @@ class _TaskListScreen extends State<TaskListScreen> {
                   });
                 },
               ),
-              onLongPress: () {
-                setState(() {
-                  _taskList.removeAt(index);
-                });
-              },
+              // onLongPress: () {
+              //   setState(() {
+              //     _taskList.removeAt(index);
+              //   });
+              // },
             );
           },
         ),
