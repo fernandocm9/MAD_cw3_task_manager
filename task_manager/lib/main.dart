@@ -85,15 +85,6 @@ class _TaskListScreen extends State<TaskListScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.edit),
-                    iconSize: 20,
-                    onPressed: () {
-                      titleController.text = task.title;
-                      descController.text = task.description;
-                      _openDialog();
-                    },
-                  ),
-                  IconButton(
                     icon: const Icon(Icons.delete),
                     iconSize: 20,
                     onPressed: () {
@@ -102,26 +93,34 @@ class _TaskListScreen extends State<TaskListScreen> {
                       });
                     },
                   ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    iconSize: 20,
+                    onPressed: () {
+                      titleController.text = task.title;
+                      descController.text = task.description;
+                      _openDialog(isEdit: true, taskIndex: index);
+                    },
+                  ),
                 ],
-              ), 
-              // isThreeLine: true,
+              ),
             );
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _openDialog(),
+        onPressed: () => _openDialog(isEdit: false),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  Future<void> _openDialog() async {
+  Future<void> _openDialog({bool isEdit = false, int taskIndex = -1}) async {
     final result = await showDialog<List<String>>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Task Details'),
+          title: Text(isEdit ? 'Edit Task' : 'Task Details'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -142,7 +141,7 @@ class _TaskListScreen extends State<TaskListScreen> {
                   Navigator.of(context).pop([titleController.text, descController.text]);
                 }
               },
-              child: const Text('Add'),
+              child: Text(isEdit ? 'Save' : 'Add'),
             ),
           ],
         );
@@ -151,12 +150,21 @@ class _TaskListScreen extends State<TaskListScreen> {
 
     if (result != null && result.length == 2) {
       setState(() {
-        _taskId++;
-        _taskList.add(Task(
-          taskId: _taskId,
-          title: result[0],
-          description: result[1],
-        ));
+        if (isEdit) {
+          _taskList[taskIndex] = Task(
+            taskId: _taskList[taskIndex].taskId,
+            title: result[0],
+            description: result[1],
+            isCompleted: _taskList[taskIndex].isCompleted, // Keep the completion state
+          );
+        } else {
+          _taskId++;
+          _taskList.add(Task(
+            taskId: _taskId,
+            title: result[0],
+            description: result[1],
+          ));
+        }
       });
     }
   }
