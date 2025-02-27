@@ -70,22 +70,23 @@ class _TaskListScreen extends State<TaskListScreen> {
           itemBuilder: (context, index) {
             final task = _taskList[index];
             return ListTile(
+              leading: Checkbox(
+                value: task.isCompleted,
+                onChanged: (value) {
+                  setState(() {
+                    task.isCompleted = value!;
+                  });
+                },
+              ),
               title: Text(task.title),
               tileColor: task.isCompleted ? Colors.green : Colors.red,
               subtitle: Text(task.description),
               trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Checkbox(
-                    value: task.isCompleted,
-                    onChanged: (value) {
-                      setState(() {
-                        task.isCompleted = value!;
-                      });
-                    },
-                  ),
                   IconButton(
                     icon: const Icon(Icons.delete),
+                    iconSize: 20,
                     onPressed: () {
                       setState(() {
                         _taskList.removeAt(index);
@@ -94,6 +95,7 @@ class _TaskListScreen extends State<TaskListScreen> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.edit),
+                    iconSize: 20,
                     onPressed: () {
                       titleController.text = task.title;
                       descController.text = task.description;
@@ -102,7 +104,7 @@ class _TaskListScreen extends State<TaskListScreen> {
                   ),
                 ],
               ), 
-              isThreeLine: true,
+              // isThreeLine: true,
             );
           },
         ),
