@@ -81,18 +81,9 @@ class _TaskListScreen extends State<TaskListScreen> {
               title: Text(task.title),
               tileColor: task.isCompleted ? Colors.green : Colors.red,
               subtitle: Text(task.description),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    iconSize: 20,
-                    onPressed: () {
-                      setState(() {
-                        _taskList.removeAt(index);
-                      });
-                    },
-                  ),
                   IconButton(
                     icon: const Icon(Icons.edit),
                     iconSize: 20,
@@ -100,6 +91,15 @@ class _TaskListScreen extends State<TaskListScreen> {
                       titleController.text = task.title;
                       descController.text = task.description;
                       _openDialog();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    iconSize: 20,
+                    onPressed: () {
+                      setState(() {
+                        _taskList.removeAt(index);
+                      });
                     },
                   ),
                 ],
