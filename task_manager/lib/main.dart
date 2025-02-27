@@ -85,21 +85,21 @@ class _TaskListScreen extends State<TaskListScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.delete),
-                    iconSize: 20,
-                    onPressed: () {
-                      setState(() {
-                        _taskList.removeAt(index);
-                      });
-                    },
-                  ),
-                  IconButton(
                     icon: const Icon(Icons.edit),
                     iconSize: 20,
                     onPressed: () {
                       titleController.text = task.title;
                       descController.text = task.description;
                       _openDialog(isEdit: true, taskIndex: index);
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    iconSize: 20,
+                    onPressed: () {
+                      setState(() {
+                        _taskList.removeAt(index);
+                      });
                     },
                   ),
                 ],
@@ -125,11 +125,11 @@ class _TaskListScreen extends State<TaskListScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: const InputDecoration(hintText: 'Enter Task Title'),
+                decoration: InputDecoration(hintText: 'Enter Task Title'),
                 controller: titleController,
               ),
               TextField(
-                decoration: const InputDecoration(hintText: 'Enter Task Description'),
+                decoration: InputDecoration(hintText: 'Enter Task Description'),
                 controller: descController,
               ),
             ],
@@ -155,7 +155,7 @@ class _TaskListScreen extends State<TaskListScreen> {
             taskId: _taskList[taskIndex].taskId,
             title: result[0],
             description: result[1],
-            isCompleted: _taskList[taskIndex].isCompleted, // Keep the completion state
+            isCompleted: _taskList[taskIndex].isCompleted,
           );
         } else {
           _taskId++;
