@@ -73,19 +73,36 @@ class _TaskListScreen extends State<TaskListScreen> {
               title: Text(task.title),
               tileColor: task.isCompleted ? Colors.green : Colors.red,
               subtitle: Text(task.description),
-              trailing: Checkbox(
-                value: task.isCompleted,
-                onChanged: (value) {
-                  setState(() {
-                    task.isCompleted = value!;
-                  });
-                },
-              ),
-              // onLongPress: () {
-              //   setState(() {
-              //     _taskList.removeAt(index);
-              //   });
-              // },
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: task.isCompleted,
+                    onChanged: (value) {
+                      setState(() {
+                        task.isCompleted = value!;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        _taskList.removeAt(index);
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      titleController.text = task.title;
+                      descController.text = task.description;
+                      _openDialog();
+                    },
+                  ),
+                ],
+              ), 
+              isThreeLine: true,
             );
           },
         ),
